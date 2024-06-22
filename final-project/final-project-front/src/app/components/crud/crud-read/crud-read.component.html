@@ -1,0 +1,55 @@
+<div class="d-flex flex-column gap-2">
+    
+    <app-crud-navbar></app-crud-navbar>
+    <form [formGroup]="form" class="d-flex flex-column gap-2 mt-2 w-50">
+        <mat-form-field appearance="fill"> 
+            <mat-label>Search ID</mat-label>
+            <input matInput type="search" formControlName="searchId"/>
+
+            @if (form.get("searchId").invalid && form.get("searchId").touched){
+                <mat-error>Search ID is required and must be a number.</mat-error>
+            }
+        </mat-form-field>
+        <button class="w-25" mat-flat-button color="primary" [disabled]="form.invalid"
+        (click)="onSubmit(form.value)"
+        >Search</button>
+
+    </form>
+
+    <div class="product-with-id" *ngIf="productWithId">
+        <mat-card>
+            <mat-card-title>
+                {{ productWithId.productName }}
+            </mat-card-title>
+            <mat-card-content>
+                {{ productWithId.shortDesc }}
+            </mat-card-content>  
+            <mat-card-content>
+                Product id:  <strong>{{productWithId.id}}</strong>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    
+    
+</div>
+<div class="product-list" [style.display]="productWithId ? 'none' : 'block'">
+    Product List
+    <div class="d-flex flex-column gap-2 mt-2 w-75">
+        <div *ngFor="let product of products">
+            <mat-card>
+                <mat-card-title>
+                    {{product.productName}}
+                </mat-card-title>
+                <mat-card-content>
+                    {{product.shortDesc}}
+                </mat-card-content>
+
+                <mat-card-content>
+                Product id:  <strong>{{product.id}}</strong>
+                </mat-card-content> 
+            </mat-card>
+        </div>
+        
+    </div>
+</div>
